@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Mathmerise{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="container">
+        <h1>Welcome to Mathmerise</h1>
+        <p>Your comprehensive platform for learning mathematics</p>
+        <form action="{{ url_for('main.search') }}" method="get" class="hero-search">
+            <input type="text" name="q" placeholder="Search for topics..." required>
+            <button type="submit">Search Now</button>
+        </form>
+    </div>
+</section>
+
+<section class="categories">
+    <div class="container">
+        <h2>Browse by Category</h2>
+        <div class="category-grid">
+            {% for category in categories %}
+            <div class="category-card">
+                <div class="category-icon">{{ category.icon or '📚' }}</div>
+                <h3>{{ category.name }}</h3>
+                <p>{{ category.description }}</p>
+                <a href="{{ url_for('topics.category', slug=category.slug) }}" class="btn">Explore</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="featured-topics">
+    <div class="container">
+        <h2>Featured Topics</h2>
+        <div class="topics-grid">
+            {% for topic in featured_topics %}
+            <div class="topic-card">
+                <h3>{{ topic.title }}</h3>
+                <p class="category">{{ topic.category.name }}</p>
+                <p>{{ topic.description[:100] }}...</p>
+                <div class="topic-meta">
+                    <span class="difficulty {{ topic.difficulty }}">{{ topic.difficulty }}</span>
+                    <span class="views">👁️ {{ topic.views }}</span>
+                </div>
+                <a href="{{ url_for('topics.view_topic', slug=topic.slug) }}" class="btn">Read More</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <div class="container">
+        <h2>Start Learning Today</h2>
+        <p>Explore hundreds of mathematics topics and master concepts with interactive examples.</p>
+        <a href="{{ url_for('topics.all_topics') }}" class="btn btn-large">Browse All Topics</a>
+    </div>
+</section>
+{% endblock %}

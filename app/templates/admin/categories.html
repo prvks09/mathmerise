@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Categories - Mathmerise{% endblock %}
+
+{% block content %}
+<section class="admin-section">
+    <div class="container">
+        <h1>Manage Categories</h1>
+        <a href="{{ url_for('admin.add_category') }}" class="btn">Add New Category</a>
+
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Slug</th>
+                    <th>Icon</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category in categories %}
+                <tr>
+                    <td>{{ category.name }}</td>
+                    <td>{{ category.slug }}</td>
+                    <td>{{ category.icon }}</td>
+                    <td>
+                        <a href="#" class="btn btn-small">Edit</a>
+                        <a href="#" class="btn btn-small btn-danger">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

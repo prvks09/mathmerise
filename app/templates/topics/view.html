@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}{{ topic.title }} - Mathmerise{% endblock %}
+
+{% block content %}
+<article class="topic-view">
+    <div class="container">
+        <div class="topic-header">
+            <h1>{{ topic.title }}</h1>
+            <div class="topic-info">
+                <span class="category">{{ topic.category.name }}</span>
+                <span class="difficulty {{ topic.difficulty }}">{{ topic.difficulty }}</span>
+                <span class="views">👁️ {{ topic.views }} views</span>
+                <span class="date">Updated: {{ topic.updated_at.strftime('%B %d, %Y') }}</span>
+            </div>
+        </div>
+
+        <div class="topic-content">
+            <section class="content-section">
+                <h2>Overview</h2>
+                <p>{{ topic.description }}</p>
+            </section>
+
+            <section class="content-section">
+                <h2>Content</h2>
+                <div class="content-body">
+                    {{ topic.content|safe }}
+                </div>
+            </section>
+
+            {% if topic.formulas %}
+            <section class="content-section">
+                <h2>Key Formulas</h2>
+                <div class="formulas-list">
+                    {% for formula in topic.formulas %}
+                    <div class="formula-item">
+                        <h4>{{ formula.title }}</h4>
+                        <div class="formula-latex">\({{ formula.latex }}\)</div>
+                        {% if formula.description %}
+                        <p>{{ formula.description }}</p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
+            {% if topic.examples %}
+            <section class="content-section">
+                <h2>Examples</h2>
+                <div class="examples-list">
+                    {% for example in topic.examples %}
+                    <div class="example-item">
+                        <h4>{{ example.title }}</h4>
+                        <div class="problem">
+                            <strong>Problem:</strong>
+                            <p>{{ example.problem }}</p>
+                        </div>
+                        <div class="solution">
+                            <strong>Solution:</strong>
+                            <p>{{ example.solution }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+        </div>
+
+        {% if related_topics %}
+        <section class="related-topics">
+            <h2>Related Topics</h2>
+            <div class="topics-grid">
+                {% for related in related_topics %}
+                <div class="topic-card">
+                    <h3>{{ related.title }}</h3>
+                    <a href="{{ url_for('topics.view_topic', slug=related.slug) }}" class="btn">Learn More</a>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+    </div>
+</article>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+{% endblock %}

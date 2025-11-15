@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}All Topics - Mathmerise{% endblock %}
+
+{% block content %}
+<section class="topics-section">
+    <div class="container">
+        <h1>All Topics</h1>
+        
+        <div class="topics-header">
+            <div class="filter-group">
+                <select id="categoryFilter" onchange="filterTopics()">
+                    <option value="">All Categories</option>
+                    {% for cat in categories %}
+                    <option value="{{ cat.id }}">{{ cat.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="topics-grid">
+            {% if topics %}
+                {% for topic in topics %}
+                <div class="topic-card" data-category="{{ topic.category_id }}">
+                    <h3>{{ topic.title }}</h3>
+                    <p class="category">{{ topic.category.name }}</p>
+                    <p>{{ topic.description[:100] }}...</p>
+                    <div class="topic-meta">
+                        <span class="difficulty {{ topic.difficulty }}">{{ topic.difficulty }}</span>
+                        <span class="views">👁️ {{ topic.views }}</span>
+                    </div>
+                    <a href="{{ url_for('topics.view_topic', slug=topic.slug) }}" class="btn">Learn More</a>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>No topics found.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - Mathmerise{% endblock %}
+
+{% block content %}
+<section class="admin-section">
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Topics</h3>
+                <p class="stat-number">{{ stats.total_topics }}</p>
+            </div>
+            <div class="stat-card">
+                <h3>Categories</h3>
+                <p class="stat-number">{{ stats.total_categories }}</p>
+            </div>
+            <div class="stat-card">
+                <h3>Formulas</h3>
+                <p class="stat-number">{{ stats.total_formulas }}</p>
+            </div>
+            <div class="stat-card">
+                <h3>Examples</h3>
+                <p class="stat-number">{{ stats.total_examples }}</p>
+            </div>
+        </div>
+
+        <div class="admin-menu">
+            <a href="{{ url_for('admin.manage_categories') }}" class="btn">Manage Categories</a>
+            <a href="{{ url_for('admin.manage_topics') }}" class="btn">Manage Topics</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Search Results - Mathmerise{% endblock %}
+
+{% block content %}
+<section class="search-section">
+    <div class="container">
+        <h1>Search Results</h1>
+        <p>Searching for: <strong>{{ query }}</strong></p>
+
+        {% if results %}
+        <div class="results-count">Found {{ results|length }} result(s)</div>
+        <div class="search-results">
+            {% for result in results %}
+            <div class="search-result-item">
+                <h3><a href="{{ url_for('topics.view_topic', slug=result.slug) }}">{{ result.title }}</a></h3>
+                <p class="result-category">Category: {{ result.category.name }}</p>
+                <p class="result-description">{{ result.description }}</p>
+                <div class="result-meta">
+                    <span class="difficulty {{ result.difficulty }}">{{ result.difficulty }}</span>
+                    <a href="{{ url_for('topics.view_topic', slug=result.slug) }}" class="btn">Read More</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-results">
+            <p>No results found for "<strong>{{ query }}</strong>"</p>
+            <p>Try searching with different keywords or <a href="{{ url_for('topics.all_topics') }}">browse all topics</a></p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

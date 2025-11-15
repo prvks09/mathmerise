@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Add Topic - Mathmerise{% endblock %}
+
+{% block content %}
+<section class="admin-section">
+    <div class="container">
+        <h1>Add New Topic</h1>
+
+        <form method="POST" class="admin-form">
+            <div class="form-group">
+                <label for="title">Topic Title</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="slug">Slug</label>
+                <input type="text" id="slug" name="slug" required>
+            </div>
+            <div class="form-group">
+                <label for="category_id">Category</label>
+                <select id="category_id" name="category_id" required>
+                    <option value="">Select a category</option>
+                    {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="content">Content (HTML supported)</label>
+                <textarea id="content" name="content" rows="10" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="difficulty">Difficulty</label>
+                <select id="difficulty" name="difficulty">
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                </select>
+            </div>
+            <button type="submit" class="btn">Create Topic</button>
+            <a href="{{ url_for('admin.manage_topics') }}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</section>
+{% endblock %}

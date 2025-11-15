@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}{{ category.name }} - Mathmerise{% endblock %}
+
+{% block content %}
+<section class="category-section">
+    <div class="container">
+        <h1>{{ category.name }}</h1>
+        <p class="category-description">{{ category.description }}</p>
+        
+        <div class="topics-grid">
+            {% if topics %}
+                {% for topic in topics %}
+                <div class="topic-card">
+                    <h3>{{ topic.title }}</h3>
+                    <p>{{ topic.description[:100] }}...</p>
+                    <div class="topic-meta">
+                        <span class="difficulty {{ topic.difficulty }}">{{ topic.difficulty }}</span>
+                        <span class="views">👁️ {{ topic.views }}</span>
+                    </div>
+                    <a href="{{ url_for('topics.view_topic', slug=topic.slug) }}" class="btn">View Topic</a>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>No topics in this category yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}
